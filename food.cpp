@@ -7,3 +7,22 @@
 //
 
 #include "food.h"
+
+Food::Food(string name, int fat_gain, int protein_gain, int price) :
+  name(name),
+  fat_gain(fat_gain),
+  protein_gain(protein_gain),
+  price(price)
+  {}
+string Food::get_name() const{
+  return name;
+}
+int Food::get_fat_gain() const{
+  return fat_gain;
+}
+int Food::get_protein_gain() const{
+  return protein_gain;
+}
+int Food::get_price() const{
+  return price;
+}
