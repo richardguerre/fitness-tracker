@@ -62,34 +62,46 @@ void RelaxPlan::addToStart(Relaxation r){
 void RelaxPlan::addToEnd(Relaxation r){
   // create copy of r on heap
   Relaxation* copy = new Relaxation(r);
-  //new current used to traverse linked list
-  Relaxation* current = head;
+  
+  if(head != NULL){
+    //new current used to traverse linked list
+    Relaxation* current = head;
 
-  //traverse linked list until end (NULL)
-  while(current->get_next() != NULL){ current = current->get_next(); }
+    //traverse linked list until end (NULL)
+    while(current->get_next() != NULL){ current = current->get_next(); }
 
-  //apend copy of r into linked list's end
-  current->set_next(copy);
+    //apend copy of r into linked list's end
+    current->set_next(copy);
+  }
+  else
+    head = copy;
 }
 
 bool RelaxPlan::remove(int remove_index){
-  if(head != NULL){
+  if(head != NULL && remove_index > 0){
     //initialize indices for traversing and manipulating linked list
     Relaxation* current = head;
     Relaxation* prev = NULL;
 
-    //traversing the linked list up to remove_index
-    for(int i=0; i<remove_index; i++, current->set_next(current->get_next())){
-      //check if the end of the linked list is reached or not.
-      if(current == NULL)
-        return false;
-      //iteration of prev pointer to point to the element before current
-      prev->set_next(current);
+    int i = 0;
+    while(current != NULL){
+      if(i == remove_index){
+        //link prev with current->next as to remove element pointed by current from linked list
+        prev->set_next(current->get_next());
+        //deallocate the removed element
+        delete current;
+        return true;
+      }
+      i++;
+      prev = current;
+      current = current->get_next();
     }
-    //link prev with next as to remove current from linked list
-    prev->set_next(current->get_next());
-    //deallocate the removed
-    free(current);
+    return false;
+  }
+  else if(remove_index == 0){
+    Relaxation* temp = head;
+    head = temp->get_next();
+    delete temp;
   }
   return false;
 }

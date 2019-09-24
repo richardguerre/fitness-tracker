@@ -29,3 +29,4 @@ relaxplan.o: relaxplan.cpp relaxplan.h
 
 clean:
 	rm -rf *.o
+	rm -r main
