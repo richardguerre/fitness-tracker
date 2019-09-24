@@ -51,3 +51,20 @@ void Buddy::set_energy(int energy) {
 void Buddy::set_money(int money) {
   this->money = money;
 }
+
+void Buddy::earn_money(int money, int times){
+  set_money(get_money() + money*times);
+}
+
+void Buddy::gain_energy(RelaxPlan plan){
+  int energyGain = 0;
+  Relaxation* current = plan.get_head();
+
+  //traversing linked list
+  while(current != NULL){
+    //adding up the energy gain of whole linked list
+    energyGain += current->get_energy_gain();
+    current = current->get_next();
+  }
+  set_energy(get_energy() + energyGain);
+}
