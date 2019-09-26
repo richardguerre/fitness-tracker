@@ -38,7 +38,7 @@ RelaxPlan::~RelaxPlan(){
 
   while(current != NULL){
     next = current->get_next();
-    free(current);
+    delete current;
     current = next;
   }
 
@@ -62,7 +62,7 @@ void RelaxPlan::addToStart(Relaxation r){
 void RelaxPlan::addToEnd(Relaxation r){
   // create copy of r on heap
   Relaxation* copy = new Relaxation(r);
-  
+
   if(head != NULL){
     //new current used to traverse linked list
     Relaxation* current = head;

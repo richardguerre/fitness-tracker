@@ -20,6 +20,9 @@ WorkoutEnvironment::WorkoutEnvironment(string name, int entry_fee, int MAX_NUM_O
 
 WorkoutEnvironment::~WorkoutEnvironment(){
   delete [] available_workouts;
+  for(int i=0; i<current_num_of_participants; i++){
+    delete participants[i];
+  }
   delete [] participants;
   participants = NULL;
 }
@@ -73,7 +76,7 @@ bool WorkoutEnvironment::register_participant(Buddy* buddy){
   if(participant_index(buddy) == -1 && entry_fee <= buddy->get_money()){
     buddy->set_money(buddy->get_money() - entry_fee);
     {
-      Buddy **array = new Buddy*[current_num_of_participants];
+      Buddy **array = new Buddy*[current_num_of_participants+1];
       for(int i=0; i<current_num_of_participants; i++){
         array[i] = participants[i];
       }
