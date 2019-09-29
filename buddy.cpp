@@ -53,7 +53,7 @@ void Buddy::set_money(int money) {
 }
 
 void Buddy::earn_money(int money, int times){
-  set_money(get_money() + money*times);
+  this->money += money*times; //set_money(get_money() + money*times);
 }
 
 void Buddy::gain_energy(RelaxPlan plan){

@@ -541,5 +541,11 @@ void test_workoutenvironment() {
     we.print_details(2);
     cout<<endl;
 
+    delete b0;
+    delete b1;
+    delete b2;
+    delete b3;
+    delete b4;
+
     cout<<"------- WorkoutEnvironment Class Completed! -------"<<endl<<endl;
 }

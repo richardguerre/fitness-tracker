@@ -20,9 +20,9 @@ WorkoutEnvironment::WorkoutEnvironment(string name, int entry_fee, int MAX_NUM_O
 
 WorkoutEnvironment::~WorkoutEnvironment(){
   delete [] available_workouts;
-  for(int i=0; i<current_num_of_participants; i++){
+  /*for(int i=0; i<current_num_of_participants; i++){
     delete participants[i];
-  }
+  }*/
   delete [] participants;
   participants = NULL;
 }
@@ -62,7 +62,9 @@ bool WorkoutEnvironment::remove_workout(int remove_index){
   return false;
 }
 int WorkoutEnvironment::participant_index(const Buddy* buddy) const{
+  //look through the whole participants array
   for(int i=0; i<current_num_of_participants; i++){
+    //check if address is the same
     if(participants[i] == buddy){
       return i;
     }
@@ -74,27 +76,36 @@ bool WorkoutEnvironment::register_participant(Buddy* buddy){
   if(participant_index(buddy) > -1)
     return false;
   if(participant_index(buddy) == -1 && entry_fee <= buddy->get_money()){
+    //deduct money
     buddy->set_money(buddy->get_money() - entry_fee);
     {
+      //make dynamic array of pointers with size current_num_of_participants+1
       Buddy **array = new Buddy*[current_num_of_participants+1];
+      //copy allelements of old dynamic array (participants) into new array.
       for(int i=0; i<current_num_of_participants; i++){
         array[i] = participants[i];
       }
+      //add buddy to the new array
       array[current_num_of_participants] = buddy;
+      //make participants point to array
       participants = array;
     }
+    //increment current_num_of_participants
     current_num_of_participants++;
     return true;
   }
+  //catch all remaining edge cases
   return false;
 }
 
 bool WorkoutEnvironment::start_workout(int participant_index, int workout_index) const{
+  //check if participant_index and workout_index are valid, and check that participant has enough energy
   if(participant_index >= 0
     && participant_index <= current_num_of_participants
     && workout_index >= 0
     && workout_index <= current_num_of_workouts
     && participants[participant_index]->get_energy() >= -1*available_workouts[workout_index].get_energy_change()){
+      //seting participants fat, muscle and energy
       participants[participant_index]->set_fat(participants[participant_index]->get_fat() + available_workouts[workout_index].get_fat_change());
       participants[participant_index]->set_muscle(participants[participant_index]->get_muscle() + available_workouts[workout_index].get_muscle_change());
       participants[participant_index]->set_energy(participants[participant_index]->get_energy() + available_workouts[workout_index].get_energy_change());
