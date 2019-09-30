@@ -8,11 +8,9 @@
 
 #include "relaxation.h"
 
+// Constructor initialization with MIL
 Relaxation::Relaxation(string name, int energy_gain) :
-  name(name),
-  energy_gain(energy_gain),
-  next(NULL)
-  {}
+  name(name), energy_gain(energy_gain), next(NULL){}
 
 string Relaxation::get_name() const{
   return name;
@@ -26,6 +24,7 @@ Relaxation* Relaxation::get_next() const{
   return next;
 }
 
+//set member pointer "next" (this->next) = param. next
 void Relaxation::set_next(Relaxation* next){
   this->next = next;
 }

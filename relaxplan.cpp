@@ -8,6 +8,7 @@
 
 #include "relaxplan.h"
 
+//constructor initialization using MIL
 RelaxPlan::RelaxPlan(string name) : name(name), head(NULL) {}
 
 // Example solution for copy constructor, you don't have to implement it
@@ -33,12 +34,17 @@ RelaxPlan::RelaxPlan(RelaxPlan const & rp): name(rp.name) {
 }
 
 RelaxPlan::~RelaxPlan(){
+  //initialize current and next pointers to traverse and manipulate linked list
   Relaxation* current = head;
   Relaxation* next;
 
+  //traverse linked list till current == NULL
   while(current != NULL){
+    //get next of rp
     next = current->get_next();
+    //delete current node in rp (start with head)
     delete current;
+    //iterate to next by setting current = next
     current = next;
   }
 
@@ -73,13 +79,13 @@ void RelaxPlan::addToEnd(Relaxation r){
     //apend copy of r into linked list's end
     current->set_next(copy);
   }
-  else
+  else //case of no elements yet
     head = copy;
 }
 
 bool RelaxPlan::remove(int remove_index){
   if(head != NULL && remove_index > 0){
-    //initialize indices for traversing and manipulating linked list
+    //initialize pointers for traversing and manipulating linked list
     Relaxation* current = head;
     Relaxation* prev = NULL;
 
@@ -87,6 +93,7 @@ bool RelaxPlan::remove(int remove_index){
     while(current != NULL){
       if(i == remove_index){
         //link prev with current->next as to remove element pointed by current from linked list
+        //deletion, bypass current and delete current.
         prev->set_next(current->get_next());
         //deallocate the removed element
         delete current;
@@ -99,6 +106,7 @@ bool RelaxPlan::remove(int remove_index){
     return false;
   }
   else if(remove_index == 0){
+    //case of removing head, setting pointer to NULL
     Relaxation* temp = head;
     head = temp->get_next();
     delete temp;

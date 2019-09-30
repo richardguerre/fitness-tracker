@@ -9,20 +9,15 @@
 #include "restaurant.h"
 
 Restaurant::Restaurant(string name) :
-  name(name),
-  list_start_index(0),
-  list_end_index(4),
-  curr_num_of_meals(0)
-  {}
+  name(name), list_start_index(0), list_end_index(4), curr_num_of_meals(0){}
 
 string Restaurant::get_name() const{
   return name;
 }
 
 bool Restaurant::add_meal(Food food){
-  /*Test 1
+  /**********Test 1***********
   if(curr_num_of_meals < 5){
-  cout << "adding: " << food.get_name() << " at: " << curr_num_of_meals<< endl;
     meals_list[curr_num_of_meals] = food;
     list_end_index = curr_num_of_meals;
     curr_num_of_meals++;
@@ -31,24 +26,16 @@ bool Restaurant::add_meal(Food food){
   return false;
   */
 
-  /*Test 2
-  if(curr_num_of_meals < 5){
-    cout << "adding: " << food.get_name() << " at: " << curr_num_of_meals<< endl;
-    for(int i=list_start_index; i<list_end_index+1; i++){
-      if(meals_list[i%5] == "")
-      meals_list[i%5]
-    }
-  }
-  return false;
-  */
-
-
+  /**********Test 2***********/
   if(curr_num_of_meals < 5){
     //check if negative, then make positive by adding 5
-    if(list_end_index < 0)
+    while(list_end_index < 0)
       list_end_index += 5;
+    //add 1 to list_end_index and take mod 5, to make sure its in [0,4]
     list_end_index = (list_end_index+1)%5;
+    //list_end_index is now the new index for food;
     meals_list[list_end_index] = food;
+    //increment curr_num_of_meals
     curr_num_of_meals++;
     return true;
   }
@@ -57,7 +44,7 @@ bool Restaurant::add_meal(Food food){
 
 bool Restaurant::remove_first_meal(){
   if(curr_num_of_meals > 0){
-    if(list_start_index > 5)
+    while(list_start_index > 5)
       list_start_index -= 5;
     list_start_index++;
     curr_num_of_meals--;
@@ -68,7 +55,7 @@ bool Restaurant::remove_first_meal(){
 
 bool Restaurant::remove_last_meal(){
   if(curr_num_of_meals > 0){
-    if(list_end_index < 0)
+    while(list_end_index < 0)
       list_end_index += 5;
     list_end_index--;
     curr_num_of_meals--;

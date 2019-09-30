@@ -8,12 +8,10 @@
 
 #include "food.h"
 
+//constructor initialization with MIL
 Food::Food(string name, int fat_gain, int protein_gain, int price) :
-  name(name),
-  fat_gain(fat_gain),
-  protein_gain(protein_gain),
-  price(price)
-  {}
+  name(name), fat_gain(fat_gain), protein_gain(protein_gain), price(price){}
+
 string Food::get_name() const{
   return name;
 }

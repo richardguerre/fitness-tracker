@@ -34,28 +34,38 @@ int WorkoutEnvironment::get_entry_fee() const{
   return entry_fee;
 }
 bool WorkoutEnvironment::add_workout(const Workout& workout, int add_index){
+  //check if its a valid add_index, and check that array is not full
   if(add_index >= 0
     && add_index <= current_num_of_workouts
     && current_num_of_workouts < MAX_NUM_OF_WORKOUTS){
+      //check if the array element at add_index is empty or not
       if(available_workouts[add_index].get_name() == "")
+        //if empty put workout at add_index
         available_workouts[add_index] = workout;
       else{
+        //else (not empty) move current element to next index, and next element to next next index...
         for(int i=current_num_of_workouts; i>add_index; i--){
           available_workouts[i] = available_workouts[i-1];
         }
+        //after moving all other elements, add workout at add_index
         available_workouts[add_index] = workout;
       }
+
+      //add = increment current_num_of_workouts
       current_num_of_workouts++;
       return true;
   }
   return false;
 }
 bool WorkoutEnvironment::remove_workout(int remove_index){
+  //check if its a valid add_index, and check that array is not full
   if(remove_index >= 0
     && remove_index < current_num_of_workouts
     && current_num_of_workouts > 0){
+      //at remove_index, replace element with next element, and so on for the next ones
       for(int i=remove_index; i<current_num_of_workouts-1; i++)
         available_workouts[i] = available_workouts[i+1];
+      //remove = decrement current_num_of_workouts
       current_num_of_workouts--;
       return true;
   }
